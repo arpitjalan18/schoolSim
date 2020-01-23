@@ -15,31 +15,34 @@ import javax.swing.Timer;
 
 public class Frame{
 	
-	static Frame tetris;
-	public Color flatBlue = new Color(0x0AB7F2);
-	public Color darkBlue = new Color(0x1E59CF);
-	public Color orange = new Color(0xFB7C10);
-	public Color yellow = new Color(0xF6BA25);
-	public Color purple = new Color(0xC531A9);
-	public Color green = new Color(0x66BF33);
-	public Color red = new Color(0xDA2941);
+	static Frame sim;
 	JFrame frame;
 	Painter painter;
 
+	public ArrayList<dot> dots = new ArrayList<>();
+	//public ArrayList<class> classes = new ArrayList<>();
 	public int ticks = 0;
 	public static void main(String args[]) {
-		tetris = new Frame();
+		sim = new Frame();
 	}
 	public int pieceIndex = 6;
-	
+	public void initializeDots() {
+		int i = 0;
+		dots.add(new dot(Color.RED, 0, 0 , 10, 10));
+		dots.add(new dot(Color.RED, 14, 80, 10, 20));
+		while (i++ < 30)
+			dots.add(new dot(Color.RED, 45, 22, 31, 65));
+	}
 	public Frame(){
 		frame = new JFrame("");
 		frame.setVisible(true);
-		frame.setSize(1017, 1071);
-		frame.setResizable(false);
+		frame.setSize(1071 + 16 ,1017 + 39);
+		//frame.setResizable(false);
 		//frame.setLocationRelativeTo(null);
-		painter = new Painter();
+		initializeDots();
+		painter = new Painter();	
 		frame.add(painter);
+		System.out.println(frame.getInsets());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}

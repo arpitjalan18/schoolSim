@@ -1,8 +1,6 @@
 package schoolSim;
-
-
-
 import java.awt.Color;
+import java.awt.Point;
 
 public class dot {
 
@@ -11,6 +9,7 @@ public class dot {
 	int yStart;
 	int xDest;
 	int yDest;
+	Point x; 
 	public dot( Color color, int xStart, int yStart, int xDest, int yDest) {
 		
 		this.color = color;
@@ -18,6 +17,16 @@ public class dot {
 		this.yStart = yStart;
 		this.xDest = xDest;
 		this.yDest = yDest;
+		x = new Point(xStart, yStart);
+		
+		AStar runner = new AStar();
+		runner.runAStar(xStart, yStart, xDest, yDest);
+	}
+	public void updatePosition(int newxPosition, int newyPosition) {
+		
+		xStart = newxPosition;
+		yStart = newyPosition;
+		
 	}
 	public Color getColor() {
 		return color;
@@ -32,6 +41,6 @@ public class dot {
 	}
 
 	public String toString(){
-		return(", " + x + ", " + y);
+		return("y");
 	}
 }

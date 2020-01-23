@@ -36,19 +36,18 @@ public class readExcel {
         // Get iterator to all the rows in current sheet
       
        
-        Color[][] mapColors = new Color[113][119];
-        Integer[][] mapBool = new Integer[113][119];
+        Color[][] mapColors = new Color[119][113];
+        Integer[][] mapBool = new Integer[119][113];
         // Traversing over each row of XLSX file
         int i = 0;
-        while (i < 113) {
+        while (i < 119) {
             
         	
             // For each row, iterate through each columns
          
             int j = 0;
-            while (j < 119) {
-
-                Cell cell = mySheet.getRow(i).getCell(j);
+            while (j < 113) {
+                Cell cell = mySheet.getRow(j).getCell(i);
                 String bgColor = "ffffffff";
                
              
@@ -66,7 +65,7 @@ public class readExcel {
             }
            i++; 
         }  
-        System.out.println(mapColors[6][26]);
+        System.out.println(mapColors[14][80]);
         return mapColors;
 	}
 	public static Color hex2Rgb(String colorStr) {

@@ -10,14 +10,11 @@ import javax.swing.JPanel;
 public class Painter extends JPanel{
 	
 	public Color Back = new Color(0x252525);
-	public Color grey1 = new Color(0x2F2F2F);
-	public Color grey2 = new Color(0x2B2B2B);
-	public Color flatBlue = new Color(0x0AB7F2);
-	
+	public Color boundaryGray = new Color(0x666666);
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Back);
-		g.fillRect(0, 0, 1130, 1190);
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 11900, 11300  );
 		
 		readExcel reader = new readExcel();
 		Color[][] mapColor = new Color[113][119];
@@ -27,16 +24,22 @@ public class Painter extends JPanel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int j = 0; j < 119; j+=1) {
-			for(int i = 0; i < 113; i+=1) {
-
-				g.setColor(mapColor[i][j]);
-				g.fillRect(9*j, 9*i, 9, 9);
-			
-			
+		for (int j = 0; j < 113; j+=1) {
+			for(int i = 0; i < 119; i+=1) {
+				
+				g.setColor(mapColor[i][j]);	
+				g.fillRect(9*j, 9*i, 9, 9);	
+					
 			}
-		} 
-		Frame tetris = Frame.tetris;	
+		}
+		Frame sim = Frame.sim;	
+		for (int i = 0; i < sim.dots.size(); i++) {
+			g.setColor(Color.BLUE);
+			g.fillRect(9*sim.dots.get(i).yStart, 9*sim.dots.get(i).xStart, 9, 9);
+			g.setColor(Color.BLUE);
+			g.fillRect(1062, 1008, 9, 9);
+		
+		}
 		
 	}
 	
