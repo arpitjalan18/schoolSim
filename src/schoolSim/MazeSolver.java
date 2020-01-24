@@ -1,13 +1,12 @@
 package schoolSim;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.io.IOException;
+import java.util.Arrays;
+
 import java.util.*;
 
-public class AStar {
-    public static final int DIAGONAL_COST = 144;
-    public static final int V_H_COST = 100 ;
+public class MazeSolver {
+    public static final int DIAGONAL_COST =14;
+    public static final int V_H_COST = 10;
     
     static class Cell{  
         int heuristicCost = 0; //Heuristic cost
@@ -27,7 +26,7 @@ public class AStar {
     }
     
     //Blocked cells are just null Cell values in grid
-    static Cell [][] grid = new Cell[113][119];
+    static Cell [][] grid = new Cell[5][5];
     
     static PriorityQueue<Cell> open;
      
@@ -49,7 +48,7 @@ public class AStar {
         endJ = j; 
     }
     
-   public static void checkAndUpdateCost(Cell current, Cell t, int cost){
+    static void checkAndUpdateCost(Cell current, Cell t, int cost){
         if(t == null || closed[t.i][t.j])return;
         int t_final_cost = t.heuristicCost+cost;
         
@@ -63,7 +62,6 @@ public class AStar {
     
     public static void AStar(){ 
         
-    	
         //add the start location to open list.
         open.add(grid[startI][startJ]);
         
@@ -71,7 +69,6 @@ public class AStar {
         
         while(true){ 
             current = open.poll();
-        
             if(current==null)break;
             closed[current.i][current.j]=true; 
 
@@ -122,11 +119,17 @@ public class AStar {
         } 
     }
     
-
-    public static ArrayList<Point> test(int xStart, int yStart, int xDest,int yDest){
-    	
-	    	
-			int x = 113; int y = 119;
+    /*
+    Params :
+    tCase = test case No.
+    x, y = Board's dimensions
+    si, sj = start location's x and y coordinates
+    ei, ej = end location's x and y coordinates
+    int[][] blocked = array containing inaccessible cell coordinates
+    */
+    public static void test(int tCase, int x, int y, int si, int sj, int ei, int ej, int[][] blocked){
+           System.out.println("\n\nTest Case #"+tCase);
+            //Reset
            grid = new Cell[x][y];
            closed = new boolean[x][y];
            open = new PriorityQueue<>((Object o1, Object o2) -> {
@@ -136,55 +139,72 @@ public class AStar {
                 return c1.finalCost<c2.finalCost?-1:
                         c1.finalCost>c2.finalCost?1:0;
             });
+           //Set start position
+           setStartCell(si, sj);  //Setting to 0,0 by default. Will be useful for the UI part
            
-          
+           //Set End Location
+           setEndCell(ei, ej); 
+           
            for(int i=0;i<x;++i){
               for(int j=0;j<y;++j){
                   grid[i][j] = new Cell(i, j);
-                  grid[i][j].heuristicCost = Math.abs(i-endI)+Math.abs(j-endJ);                
+                  grid[i][j].heuristicCost = Math.abs(i-endI)+Math.abs(j-endJ);
+                  System.out.print(grid[i][j].heuristicCost+" ");
               }
+              System.out.println();
            }
-           grid[xDest][yDest].finalCost = 0;
-           readExcel reader = new readExcel();
-			Color[][] mapColor = new Color[113][119];
-			try {
-				mapColor = reader.readFromExcel();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();  
-			}
-			for (int i = 0; i < 113; i++) {
-				for (int j = 0; j < 119; j++) {
-					
-					if ( mapColor[i][j].getBlue() == 102 &&  mapColor[i][j].getRed() == 102 && mapColor[i][j].getGreen() == 102) {
-						setBlocked(i, j);
-						
-					}
-	
-				}
-			}
-         
-			
-			//Set start position
-	           setStartCell(xStart, yStart);  //Setting to 0,0 by default. Will be useful for the UI part
-	           
-	          //Set End Location
-	           setEndCell(xDest, yDest); 
-        AStar(); 
-        ArrayList<Point> path = new ArrayList<>();
-        if(closed[endI][endJ]){
-            //Trace back the path 
-             
-             Cell current = grid[endI][endJ];
-             path.add(new Point(current.i, current.j));
-             while(current.parent!=null){
-             	 path.add(new Point(current.i, current.j));
-                 current = current.parent;
-             } 
-    
-        }
+           grid[si][sj].finalCost = 0;
+           
+           /*
+             Set blocked cells. Simply set the cell values to null
+             for blocked cells.
+           */
+           for(int i=0;i<blocked.length;++i){
+               setBlocked(blocked[i][0], blocked[i][1]);
+           }
+           
+           //Display initial map
+           System.out.println("Grid: ");
+            for(int i=0;i<x;++i){
+                for(int j=0;j<y;++j){
+                   if(i==si&&j==sj)System.out.print("SO  "); //Source
+                   else if(i==ei && j==ej)System.out.print("DE  ");  //Destination
+                   else if(grid[i][j]!=null)System.out.printf("%-3d ", 0);
+                   else System.out.print("BL  "); 
+                }
+                System.out.println();
+            } 
+            System.out.println();
+           
+           AStar(); 
+           System.out.println("\nScores for cells: ");
+           for(int i=0;i<x;++i){
+               for(int j=0;j<x;++j){
+                   if(grid[i][j]!=null)System.out.printf("%-3d ", grid[i][j].finalCost);
+                   else System.out.print("BL  ");
+               }
+               System.out.println();
+           }
+           System.out.println();
+            
+           if(closed[endI][endJ]){
+               //Trace back the path 
+                System.out.println("Path: ");
+                Cell current = grid[endI][endJ];
+                System.out.print(current);
+                while(current.parent!=null){
+                    System.out.print(" -> "+current.parent);
+                    current = current.parent;
+                } 
+                System.out.println();
+           }else System.out.println("No possible path");
+    }
      
-        return path;	
-       
-    }   
+    public static void main(String[] args) throws Exception{   
+       // test(1, 5, 5, 0, 0, 3, 2, new int[][]{{0,4},{2,2},{3,1},{3,3}}); 
+        //test(2, 5, 5, 0, 0, 4, 4, new int[][]{{0,4},{2,2},{3,1},{3,3}});   
+        test(3, 7, 7, 2, 1, 5, 4, new int[][]{{4,1},{4,3},{5,3},{2,3}});
+        
+       // test(1, 5, 5, 0, 0, 4, 4, new int[][]{{3,4},{3,3},{4,3}});
+    }
 }

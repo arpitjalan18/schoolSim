@@ -21,8 +21,11 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook; 
 
 public class readExcel {
+	static Frame sim;
+	public static void main(String args[]) {
+		sim = new Frame();
+	}
 	
-
 	public Color[][] readFromExcel() throws IOException{
 		File myFile = new File("C:\\Users\\arpit\\coding\\twiet\\schoolSim\\map0.xlsx");
         FileInputStream fis = new FileInputStream(myFile);
@@ -36,25 +39,27 @@ public class readExcel {
         // Get iterator to all the rows in current sheet
       
        
-        Color[][] mapColors = new Color[119][113];
-        Integer[][] mapBool = new Integer[119][113];
+        Color[][] mapColors = new Color[113][119];
+
         // Traversing over each row of XLSX file
         int i = 0;
-        while (i < 119) {
+        while (i < 113) {
             
         	
             // For each row, iterate through each columns
          
             int j = 0;
-            while (j < 113) {
-                Cell cell = mySheet.getRow(j).getCell(i);
+            while (j < 119) {
+                Cell cell = mySheet.getRow(i).getCell(j);
                 String bgColor = "ffffffff";
                
              
                 try {  
                 	bgColor = ((ExtendedColor) cell.getCellStyle().getFillForegroundColorColor()).getARGBHex();
                 }
-                catch(Exception e) {}
+                catch(Exception e) {
+                
+                }
              
                 if (true) {
                 	
@@ -65,7 +70,7 @@ public class readExcel {
             }
            i++; 
         }  
-        System.out.println(mapColors[14][80]);
+ 
         return mapColors;
 	}
 	public static Color hex2Rgb(String colorStr) {

@@ -1,15 +1,23 @@
 package schoolSim;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class dot {
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class dot extends JPanel {
 
 	Color color;
 	int xStart;
 	int yStart;
 	int xDest;
 	int yDest;
+	ArrayList<Point> path;
 	Point x; 
+	int speedDiv;
 	public dot( Color color, int xStart, int yStart, int xDest, int yDest) {
 		
 		this.color = color;
@@ -17,20 +25,29 @@ public class dot {
 		this.yStart = yStart;
 		this.xDest = xDest;
 		this.yDest = yDest;
-		x = new Point(xStart, yStart);
-		
+	
 		AStar runner = new AStar();
-		runner.runAStar(xStart, yStart, xDest, yDest);
-	}
-	public void updatePosition(int newxPosition, int newyPosition) {
+		path = runner.test(xStart, yStart, xDest, yDest);
 		
-		xStart = newxPosition;
-		yStart = newyPosition;
 		
 	}
+
+	public void updatePosition() {
+
+			if (path.size()> 0) {
+				xStart = path.get(path.size()-1).x;
+				yStart = path.get(path.size()-1).y;
+				path.remove(path.size()-1);
+			}
+
+		
+		
+	}
+	
 	public Color getColor() {
 		return color;
 	}
+	
 	public boolean full() {
 		if (color != null){
 			return true;
