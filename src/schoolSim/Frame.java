@@ -28,6 +28,12 @@ public class Frame implements ActionListener{
 
 	public void initializeDots() {
 			dots.add(new dot(Color.RED, 100, 10 , 100, 100));
+			dots.add(new dot(Color.RED, 100, 10 , 100, 100));
+			dots.add(new dot(Color.RED, 100, 10 , 100, 100));
+			dots.add(new dot(Color.RED, 100, 10 , 100, 100));
+			dots.add(new dot(Color.RED, 100, 10 , 100, 100));
+			dots.add(new dot(Color.RED, 100, 10 , 100, 100));
+			
 			
 	}
 	public Frame(){
@@ -54,7 +60,7 @@ public class Frame implements ActionListener{
 				for (Point x : dotPositions){
 					if(x.x == dotPositions.get(i).x && x.y ==dotPositions.get(i).y) {otherDots++;}
 				}
-				if (ticks%(10) == 0) {
+				if (ticks%(10+ otherDots*2) == 0) {
 					dots.dots.get(i).updatePosition();
 				}
 

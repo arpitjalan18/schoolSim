@@ -38,8 +38,7 @@ public class dotArray extends JPanel{
 				g.fillRect(9*j, 9*i, 9, 9);
 				
 			}
-		}
-		System.out.println("iahah");
+		}  
 		for (int i = 0; i < dots.size(); i++) {
 			g.setColor(Color.BLUE);
 			g.fillRect(9*dots.get(i).yStart, 9*dots.get(i).xStart, 9, 9);
