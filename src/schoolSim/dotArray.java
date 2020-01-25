@@ -10,13 +10,17 @@ import javax.swing.JPanel;
 
 public class dotArray extends JPanel{
 	ArrayList<dot> dots = new ArrayList<>();
+	public int mult = 9;
 	public void add(dot dot) {
 		dots.add(dot);
 	}
 	public void remove(dot dot) {
 		dots.remove(dot);
 	}
-
+	public void setHeight(int height) {
+		mult = height/113;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 	
@@ -35,13 +39,13 @@ public class dotArray extends JPanel{
 			for(int j = 0; j < 119; j+=1) {
 				
 				g.setColor(mapColor[i][j]);	
-				g.fillRect(9*j, 9*i, 9, 9);
+				g.fillRect(mult*j, mult*i, mult, mult);
 				
 			}
 		}  
 		for (int i = 0; i < dots.size(); i++) {
 			g.setColor(Color.BLUE);
-			g.fillRect(9*dots.get(i).yStart, 9*dots.get(i).xStart, 9, 9);
+			g.fillRect(mult*dots.get(i).yStart, mult*dots.get(i).xStart, mult, mult);
 		}
 
 	}
