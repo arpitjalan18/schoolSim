@@ -27,7 +27,7 @@ public class readExcel {
 	}
 	
 	public Color[][] readFromExcel() throws IOException{
-		File myFile = new File("C:\\Users\\arpit\\coding\\twiet\\schoolSim\\map0.xlsx");
+		File myFile = new File("map0.xlsx");
         FileInputStream fis = new FileInputStream(myFile);
 
         // Finds the workbook instance for XLSX file
