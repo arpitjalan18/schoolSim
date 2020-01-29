@@ -26,20 +26,20 @@ public class readExcel {
 		sim = new Frame();
 	}
 	
-	public Color[][] readFromExcel() throws IOException{
-		File myFile = new File("map0.xlsx");
+	public Color[][] readFromExcel(int sheet) throws IOException{
+		File myFile = new File("map1.xlsx");
         FileInputStream fis = new FileInputStream(myFile);
 
         // Finds the workbook instance for XLSX file
         XSSFWorkbook myWorkBook = new XSSFWorkbook (fis);
        
         // Return first sheet from the XLSX workbook
-        XSSFSheet mySheet = myWorkBook.getSheetAt(1);
+        XSSFSheet mySheet = myWorkBook.getSheetAt(sheet);
        
         // Get iterator to all the rows in current sheet
       
        
-        Color[][] mapColors = new Color[113][119];
+        Color[][] mapColors = new Color[113][100];
 
         // Traversing over each row of XLSX file
         int i = 0;
@@ -49,7 +49,8 @@ public class readExcel {
             // For each row, iterate through each columns
          
             int j = 0;
-            while (j < 119) {
+            while (j < 100) {
+            	
                 Cell cell = mySheet.getRow(i).getCell(j);
                 String bgColor = "ffffffff";
                
@@ -65,6 +66,12 @@ public class readExcel {
                 	
                 	mapColors[i][j] = hex2Rgb(bgColor);
                 	
+                }
+                if (sheet == 2 && i==111 ) {   
+            		mapColors[112][j] = Color.white;
+            	}
+                if (sheet == 2 && i==111 && j==99) {
+                	i=113;
                 }
             j++;
             }

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class AStar {
-    public static final int DIAGONAL_COST = 144;
+    public static final int DIAGONAL_COST = 141;
     public static final int V_H_COST = 100 ;
     
     static class Cell{  
@@ -27,7 +27,7 @@ public class AStar {
     }
     
     //Blocked cells are just null Cell values in grid
-    static Cell [][] grid = new Cell[113][119];
+    static Cell [][] grid = new Cell[113][100];
     
     static PriorityQueue<Cell> open;
      
@@ -123,10 +123,10 @@ public class AStar {
     }
     
 
-    public static ArrayList<Point> test(int xStart, int yStart, int xDest,int yDest){
+    public static ArrayList<Point> test(int xStart, int yStart, int xDest,int yDest, int floorNum){
     	
 	    	
-			int x = 113; int y = 119;
+			int x = 113; int y = 100;
            grid = new Cell[x][y];
            closed = new boolean[x][y];
            open = new PriorityQueue<>((Object o1, Object o2) -> {
@@ -146,15 +146,15 @@ public class AStar {
            }
            grid[xDest][yDest].finalCost = 0;
            readExcel reader = new readExcel();
-			Color[][] mapColor = new Color[113][119];
+			Color[][] mapColor = new Color[113][100];
 			try {
-				mapColor = reader.readFromExcel();
+				mapColor = reader.readFromExcel(floorNum);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();  
 			}
 			for (int i = 0; i < 113; i++) {
-				for (int j = 0; j < 119; j++) {
+				for (int j = 0; j < 100; j++) {
 					
 					if ( mapColor[i][j].getBlue() == 102 &&  mapColor[i][j].getRed() == 102 && mapColor[i][j].getGreen() == 102) {
 						setBlocked(i, j);
