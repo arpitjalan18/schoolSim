@@ -303,9 +303,10 @@ public class Frame implements ActionListener{
 	}
 
 
+	int a =2;
 	public void initializeDots() {
 		initializeClass();
-		int a = 2;
+		
 		for (int i = 0; i < a; i++) {
 			initializeClass2();
 		}
@@ -338,7 +339,8 @@ public class Frame implements ActionListener{
 			
 	}
 	public void changeDotsDests() {
-		int a = 2;
+		// a is the number of dots per class
+
 		for (int i = 0; i < a; i++) {
 			initializeClass2();
 		}
@@ -424,7 +426,7 @@ public class Frame implements ActionListener{
 				for (Point x : dotPositions){
 					if(x.x == dotPositions.get(i).x && x.y ==dotPositions.get(i).y) {otherDots++;}
 				}
-				if (ticks%(1 + otherDots*1) == 0) {
+				if (ticks%(3 + otherDots*1) == 0) {
 					if(dots.dots.get(i).path.size()> 0) {
 						stillMoving = true;
 					}
